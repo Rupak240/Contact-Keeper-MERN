@@ -38,10 +38,16 @@ const Register = (props) => {
   const onSubmit = (e) => {
     e.preventDefault();
 
-    if (name === "" || email === "" || password === "") {
+    if (name === "" && email === "" && password === "") {
       setAlert("Please enter all fields", "danger");
+    } else if (name === "") {
+      setAlert("Please enter the Name", "danger");
+    } else if (email === "") {
+      setAlert("Email is required", "danger");
+    } else if (password === "") {
+      setAlert("Password is required", "danger");
     } else if (password !== password2) {
-      setAlert("Password do not match", "danger");
+      setAlert("Passwords do not match", "danger");
     } else {
       register({
         name,
@@ -56,7 +62,7 @@ const Register = (props) => {
       <h1>
         Account <span className="text-primary">Register</span>
       </h1>
-      <form onSubmit={onSubmit}>
+      <form onSubmit={onSubmit} noValidate>
         <div className="form-group">
           <label htmlFor="name">Name</label>
           <input
