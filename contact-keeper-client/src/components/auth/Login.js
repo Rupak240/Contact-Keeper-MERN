@@ -20,7 +20,6 @@ const Login = (props) => {
       clearErrors();
     }
 
-    console.log(authContext);
     // eslint-disable-next-line
   }, [error, isAuthenticated, props.history]);
 
@@ -38,7 +37,7 @@ const Login = (props) => {
   const onSubmit = (e) => {
     e.preventDefault();
 
-    if (email === "" || password === "") {
+    if (email === "" && password === "") {
       setAlert("Please fill in all fields", "danger");
     } else if (email === "") {
       setAlert("Email is required", "danger");
