@@ -15,10 +15,12 @@ const Login = (props) => {
       props.history.push("/");
     }
 
-    if (error === "Invalid credentials") {
+    if (error === "Invalid Credentials") {
       setAlert(error, "danger");
       clearErrors();
     }
+
+    console.log(authContext);
     // eslint-disable-next-line
   }, [error, isAuthenticated, props.history]);
 
@@ -38,6 +40,10 @@ const Login = (props) => {
 
     if (email === "" || password === "") {
       setAlert("Please fill in all fields", "danger");
+    } else if (email === "") {
+      setAlert("Email is required", "danger");
+    } else if (!email.includes("@", ".")) {
+      setAlert("Email is invalid", "danger");
     } else {
       login({
         email,
@@ -51,7 +57,7 @@ const Login = (props) => {
       <h1>
         Account <span className="text-primary">Login</span>
       </h1>
-      <form onSubmit={onSubmit}>
+      <form onSubmit={onSubmit} noValidate>
         <div className="form-group">
           <label htmlFor="email">Email Address</label>
           <input

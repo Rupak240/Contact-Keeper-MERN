@@ -44,6 +44,8 @@ const Register = (props) => {
       setAlert("Please enter the Name", "danger");
     } else if (email === "") {
       setAlert("Email is required", "danger");
+    } else if (!email.includes("@", ".")) {
+      setAlert("Email is invalid", "danger");
     } else if (password === "") {
       setAlert("Password is required", "danger");
     } else if (password !== password2) {

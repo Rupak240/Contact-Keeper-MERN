@@ -1,8 +1,12 @@
 import React, { useState, useContext, useEffect } from "react";
 import ContactContext from "../../context/contact/contactContext";
+import AlertContext from "../../context/alert/alertContext";
 
 const ContactForm = () => {
   const contactContext = useContext(ContactContext);
+  const alertContext = useContext(AlertContext);
+
+  const { setAlert } = alertContext;
 
   const { addContact, updateContact, current, clearCurrent } = contactContext;
 
@@ -35,7 +39,19 @@ const ContactForm = () => {
     e.preventDefault();
 
     if (current === null) {
-      addContact(contact);
+      if (name === "" && email === "" && phone === "") {
+        setAlert("Please fill out the details", "danger");
+      } else if (name === "") {
+        setAlert("Name is required", "danger");
+      } else if (email === "") {
+        setAlert("Email is required", "danger");
+      } else if (!email.includes("@", ".")) {
+        setAlert("Email is invalid", "danger");
+      } else if (phone.length !== 10) {
+        setAlert("Contact Number is not valid", "danger");
+      } else {
+        addContact(contact);
+      }
     } else {
       updateContact(contact);
     }
@@ -47,7 +63,7 @@ const ContactForm = () => {
   };
 
   return (
-    <form onSubmit={onSubmit}>
+    <form onSubmit={onSubmit} noValidate>
       <h2 className="text-primary">
         {current ? "Edit Contact" : "Add Contact"}
       </h2>
